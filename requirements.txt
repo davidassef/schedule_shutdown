@@ -1,0 +1,9 @@
+PyQt6==6.6.1
+pytest==8.3.5
+coverage==7.4.4
+pyinstaller==6.12.0
+pillow==10.4.0
+cairosvg==2.7.1
+pytest-cov==5.0.0
+SQLAlchemy==2.0.25
+python-dateutil==2.8.2

@@ -1,0 +1,15 @@
+[MASTER]
+# Required packages for pylint to analyze
+init-hook='import sys; from PyQt6 import QtCore, QtGui, QtWidgets'
+extension-pkg-allow-list=PyQt6
+
+[TYPECHECK]
+# List of members which are set dynamically and missed by pylint inference system
+generated-members=PyQt6.*
+
+[MESSAGES CONTROL]
+# Disable specific messages
+disable=
+    C0111, # missing-docstring
+    C0103, # invalid-name (for Qt's naming conventions)
+    E1101, # no-member (para membros dinâmicos como em PyQt)

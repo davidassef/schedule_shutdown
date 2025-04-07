@@ -1,0 +1,130 @@
+#!/usr/bin/env python
+"""
+Script para auxiliar na atualização da versão do projeto no GitHub.
+Este script ajuda a criar tags de versão e realizar o push para o repositório remoto.
+"""
+
+import os
+import sys
+import subprocess
+import argparse
+
+def run_command(command, desc=None):
+    """Executa um comando shell e exibe o resultado."""
+    if desc:
+        print(f"\n{desc}...")
+    
+    result = subprocess.run(command, shell=True, capture_output=True, text=True)
+    
+    if result.returncode != 0:
+        print(f"Erro ao executar comando: {command}")
+        print(f"Saída de erro: {result.stderr}")
+        return False
+    
+    if result.stdout:
+        print(result.stdout)
+    
+    return True
+
+def init_git_repo_if_needed():
+    """Inicializa o repositório Git se necessário."""
+    if not os.path.exists('.git'):
+        if not run_command('git init', 'Inicializando repositório Git'):
+            return False
+    return True
+
+def check_remote_exists():
+    """Verifica se o remote origin já existe."""
+    result = subprocess.run('git remote -v', shell=True, capture_output=True, text=True)
+    return 'origin' in result.stdout
+
+def setup_git_repo(remote_url=None):
+    """Configura o repositório Git."""
+    if not init_git_repo_if_needed():
+        return False
+    
+    # Adicionar remote se fornecido e não existir
+    if remote_url and not check_remote_exists():
+        if not run_command(f'git remote add origin {remote_url}', 'Adicionando repositório remoto'):
+            return False
+    
+    return True
+
+def create_version_tag(version):
+    """Cria uma tag de versão."""
+    tag_msg = f"Versão {version}"
+    if not run_command(f'git tag -a v{version} -m "{tag_msg}"', f'Criando tag v{version}'):
+        return False
+    return True
+
+def push_to_remote(branch="main", push_tags=True):
+    """Envia as alterações para o repositório remoto."""
+    # Enviar branch
+    if not run_command(f'git push origin {branch}', f'Enviando branch {branch} para o repositório remoto'):
+        return False
+    
+    # Enviar tags, se solicitado
+    if push_tags:
+        if not run_command('git push --tags', 'Enviando tags para o repositório remoto'):
+            return False
+    
+    return True
+
+def update_version():
+    """Função principal para atualizar a versão no repositório."""
+    parser = argparse.ArgumentParser(description='Atualiza a versão do projeto no Git')
+    parser.add_argument('--version', default='2.0.0', help='Número da versão (ex: 2.0.0)')
+    parser.add_argument('--remote', help='URL do repositório remoto (se ainda não configurado)')
+    parser.add_argument('--branch', default='main', help='Nome da branch (padrão: main)')
+    parser.add_argument('--commit-msg', default='Atualização para a versão 2.0', 
+                        help='Mensagem para o commit')
+    
+    args = parser.parse_args()
+    
+    print(f"=" * 70)
+    print(f"Atualizando para a versão {args.version}")
+    print(f"=" * 70)
+    
+    # Configurar repositório
+    if not setup_git_repo(args.remote):
+        print("Erro ao configurar o repositório Git.")
+        return False
+    
+    # Adicionar todos os arquivos
+    if not run_command('git add .', 'Adicionando arquivos'):
+        return False
+    
+    # Fazer commit
+    if not run_command(f'git commit -m "{args.commit_msg}"', 'Commitando alterações'):
+        return False
+    
+    # Criar tag de versão
+    if not create_version_tag(args.version):
+        return False
+    
+    # Perguntar se deseja enviar para o repositório remoto
+    response = input("\nDeseja enviar as alterações para o repositório remoto? (s/n): ").lower()
+    if response == 's' or response == 'sim':
+        if not push_to_remote(args.branch, True):
+            print("Erro ao enviar alterações para o repositório remoto.")
+            return False
+    
+    print(f"\n{'-' * 70}")
+    print(f"Processo de atualização para a versão {args.version} concluído com sucesso!")
+    print(f"Os arquivos foram commitados localmente e a tag foi criada.")
+    if response == 's' or response == 'sim':
+        print(f"As alterações foram enviadas para o repositório remoto.")
+    else:
+        print(f"As alterações não foram enviadas para o repositório remoto.")
+        print(f"Use 'git push origin {args.branch}' e 'git push --tags' quando desejar enviar.")
+    print(f"{'-' * 70}")
+    
+    return True
+
+if __name__ == "__main__":
+    try:
+        update_version()
+    except KeyboardInterrupt:
+        print("\n\nOperação cancelada pelo usuário.")
+    except Exception as e:
+        print(f"\nErro inesperado: {e}")
