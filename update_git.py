@@ -93,8 +93,44 @@ def setup_git_repo(remote_url=None, branch="main"):
     
     return True
 
+def check_tag_exists(version):
+    """Verifica se uma tag já existe."""
+    success, stdout, stderr = run_command(f'git tag -l v{version}')
+    return success and f"v{version}" in stdout
+
 def create_version_tag(version):
     """Cria uma tag de versão."""
+    tag_name = f"v{version}"
+    
+    # Verifica se a tag já existe
+    if check_tag_exists(version):
+        print(f"\nA tag {tag_name} já existe.")
+        choice = input("Deseja (s)ubstituir a tag existente, (i)ncrementar a versão ou (c)ancelar? [s/i/c]: ").lower()
+        
+        if choice == 'c' or choice == 'cancelar':
+            print("Operação de criação de tag cancelada.")
+            return False
+        
+        elif choice == 's' or choice == 'substituir':
+            # Remove a tag existente
+            run_command(f'git tag -d {tag_name}', f'Removendo tag {tag_name} existente')
+            
+        elif choice == 'i' or choice == 'incrementar':
+            # Incrementa a versão
+            parts = version.split('.')
+            if len(parts) >= 3:
+                parts[-1] = str(int(parts[-1]) + 1)
+                new_version = '.'.join(parts)
+                print(f"\nIncrementando versão para {new_version}")
+                return create_version_tag(new_version)
+            else:
+                new_version = f"{version}.1"
+                print(f"\nIncrementando versão para {new_version}")
+                return create_version_tag(new_version)
+        else:
+            print("Opção inválida. Operação de criação de tag cancelada.")
+            return False
+    
     tag_msg = f"Versão {version}"
     if not run_command(f'git tag -a v{version} -m "{tag_msg}"', f'Criando tag v{version}')[0]:
         return False
