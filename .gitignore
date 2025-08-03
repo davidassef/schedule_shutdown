@@ -6,7 +6,6 @@ __pycache__/
 .Python
 build/
 develop-eggs/
-dist/
 downloads/
 eggs/
 .eggs/
@@ -43,4 +42,4 @@ config.json
 
 # OS
 .DS_Store
-Thumbs.db 
+Thumbs.db
