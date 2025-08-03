@@ -155,7 +155,7 @@ def build_executable():
     # Executa o PyInstaller
     print("Executando PyInstaller...")
     print(" ".join(cmd))
-    subprocess.run(cmd)
+    subprocess.run(cmd, check=True)
     
     print("=" * 70)
     print("Executável criado com sucesso!")

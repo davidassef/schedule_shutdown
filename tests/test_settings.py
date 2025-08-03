@@ -9,7 +9,7 @@ import json
 import tempfile
 from unittest.mock import patch, mock_open
 
-from settings import Settings
+from src.core.settings import Settings
 
 
 class TestSettings(unittest.TestCase):

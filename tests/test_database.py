@@ -6,7 +6,7 @@ Testes unitários para o módulo de banco de dados do Agendador de Desligamento.
 import unittest
 import os
 from datetime import datetime, timedelta
-from database import Database
+from src.models.database import Database
 import sqlite3
 
 

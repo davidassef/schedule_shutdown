@@ -7,7 +7,7 @@ from datetime import datetime, timedelta
 from typing import Optional, Dict, Callable
 
 from PyQt6 import QtCore
-from system_actions import SystemActions
+from .system_actions import SystemActions
 
 
 class ImmediateAction:

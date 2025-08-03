@@ -7,7 +7,11 @@ import unittest
 from unittest.mock import patch
 from datetime import datetime, timedelta
 import sqlite3
-from scheduled_actions import ScheduledActionsManager
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+from src.services.scheduled_actions import ScheduledActionsManager
 
 
 class TestScheduledActionsManager(unittest.TestCase):
@@ -152,7 +156,7 @@ class TestScheduledActionsManager(unittest.TestCase):
         active_schedules = self.manager.get_active_schedules()
         self.assertEqual(len(active_schedules), 0)
 
-    @patch('scheduled_actions.SystemActions.cancel_shutdown', return_value=True)
+    @patch('src.services.scheduled_actions.SystemActions.cancel_shutdown', return_value=True)
     def test_cancel_schedule(self, mock_cancel):
         """Testa o cancelamento de um agendamento"""
         # Adicionar um agendamento

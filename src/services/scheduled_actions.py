@@ -5,9 +5,9 @@ Este módulo lida com ações que são salvas no banco de dados e exibidas na ta
 
 from datetime import datetime, timedelta
 from typing import List, Dict, Optional, Callable
-from database import Database
+from ..models.database import Database
 
-from system_actions import SystemActions
+from .system_actions import SystemActions
 
 
 class ScheduledActionsManager:

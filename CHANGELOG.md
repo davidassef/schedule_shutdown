@@ -1,35 +1,56 @@
-# Changelog
+# 📋 Changelog
 
-Todas as alterações significativas neste projeto serão documentadas neste arquivo.
+Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 
-## [2.0.0] - Abril 2025
+O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/),
+e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR/).
+
+## [Não Lançado]
 
 ### Adicionado
-- Suporte completo a temas (claro e escuro)
-- Sistema de notificações aprimorado
-- Diálogo de agendamento redesenhado
-- Testes unitários para todos os componentes
-- Cobertura de código aumentada para >90%
-- Empacotamento automático via PyInstaller
-- Ícone SVG e formato ICO para melhor visualização
-
-### Alterado
-- Refatoração completa do código-fonte
-- Melhor gerenciamento de agendamentos persistentes
-- Interface gráfica modernizada
-- Reorganização do projeto em módulos mais coesos
-- Melhor tratamento de erros e exceções
+- Sistema completo de testes automatizados com 69 testes
+- Cobertura de código de 40% com relatórios HTML
+- Script de build automatizado para gerar executável
+- Documentação completa do projeto
+- Changelog para rastreamento de mudanças
 
 ### Corrigido
-- Problema de sincronização com o relógio do sistema
-- Falhas na execução de tarefas agendadas
-- Erro ao carregar configurações em determinados ambientes
-- Problema de perda de dados ao desligar o sistema
+- Problemas de dependências nos testes
+- Mocks complexos do PyQt6 simplificados
+- Testes de notificações e ações do sistema
 
-## [1.0.0] - Lançamento Inicial
+### Melhorado
+- Estrutura de testes mais robusta e manutenível
+- Processo de build automatizado
+- Organização da documentação
+
+## [1.0.0] - 2025-01-XX
 
 ### Adicionado
-- Funcionalidades básicas de agendamento
-- Ações do sistema (desligar, reiniciar, suspender, hibernar)
-- Interface gráfica simples
-- Salvamento de configurações básicas
+- Interface gráfica completa com PyQt6
+- Agendamento de desligamento, reinicialização, suspensão e hibernação
+- Sistema de notificações
+- Configurações personalizáveis
+- Banco de dados SQLite para histórico
+- Tema escuro/claro
+- Minimização para bandeja do sistema
+- Integração com inicialização do Windows
+
+### Recursos Principais
+- ⏰ **Agendamento Flexível**: Configure horários específicos ou intervalos de tempo
+- 🔄 **Múltiplas Ações**: Desligar, reiniciar, suspender ou hibernar
+- 📊 **Histórico Completo**: Acompanhe todas as ações executadas
+- 🎨 **Interface Moderna**: Design limpo e intuitivo
+- 🔔 **Notificações**: Alertas visuais e sonoros
+- ⚙️ **Configurável**: Personalize comportamentos e aparência
+- 🚀 **Executável Único**: Não requer instalação
+
+---
+
+### Tipos de Mudanças
+- **Adicionado** para novas funcionalidades
+- **Alterado** para mudanças em funcionalidades existentes
+- **Descontinuado** para funcionalidades que serão removidas
+- **Removido** para funcionalidades removidas
+- **Corrigido** para correções de bugs
+- **Segurança** para vulnerabilidades corrigidas
